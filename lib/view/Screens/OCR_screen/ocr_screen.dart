@@ -43,7 +43,6 @@ class _OCRScreenState extends State<OCRScreen> {
     //     await http.MultipartFile.fromPath('image', image!.path),
     //   );
 
-    // Send the request to the API
     final response = await request.send();
 
     if (response.statusCode == 200) {
