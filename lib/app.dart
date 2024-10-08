@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:study_hub/splash.dart';
 
 import 'utils/theme/theme.dart';
@@ -8,7 +9,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         title: "Study Hub",
         themeMode: ThemeMode.system,
         theme: TAppTheme.lightTheme,
