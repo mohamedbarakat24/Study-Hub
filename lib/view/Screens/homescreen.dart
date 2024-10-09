@@ -15,7 +15,7 @@ class _HomePageState extends State<HomeScreen> {
   static final List<Widget> _pages = <Widget>[
     const Center(child: OCRScreen()),
     const Center(child: ChatView()),
-    Center(child: Text("hhhh")),
+    const Center(child: Text("hhhh")),
     const Center(child: Text('Profile', style: TextStyle(fontSize: 24))),
   ];
 

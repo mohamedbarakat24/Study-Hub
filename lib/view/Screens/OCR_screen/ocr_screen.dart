@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For Clipboard support
@@ -64,7 +63,7 @@ class _OCRScreenState extends State<OCRScreen> {
     try {
       // Process the image for text recognition
       final RecognizedText recognizedText =
-      await textRecognizer.processImage(inputImage);
+          await textRecognizer.processImage(inputImage);
 
       // Extract the recognized text and update the UI
       setState(() {
@@ -73,7 +72,7 @@ class _OCRScreenState extends State<OCRScreen> {
     } catch (e) {
       print('Failed to recognize text: $e');
     } finally {
-      // Remember to close the text recognizer when you're done to release resources
+      //close the text recognizer when you're done to release resources
       textRecognizer.close();
     }
   }
@@ -83,7 +82,7 @@ class _OCRScreenState extends State<OCRScreen> {
     if (_extractedText.isNotEmpty) {
       Clipboard.setData(ClipboardData(text: _extractedText));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: const Text('Text copied to clipboard!'),
           backgroundColor: MyColors.primary,
         ),
@@ -94,84 +93,92 @@ class _OCRScreenState extends State<OCRScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Display the selected image if available
-            if (imagefile != null) ...[
-              Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: Image.file(imagefile!),
-              ),
-              const SizedBox(height: 20),
-            ],
-
-            // Button to show the dialog for selecting image source
-            ElevatedButton(
-              onPressed: ShowImageDialog1,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: MyColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              ),
-              child: const Text(
-                'Pick Image',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Display the extracted text inside a scrollable container
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: _extractedText.isEmpty
-                    ? const Center(
-                  child: Text(
-                    'Extracted text will appear here.',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Display the selected image if available
+              if (imagefile != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.grey.shade300),
                   ),
-                )
-                    : SingleChildScrollView(
-                  child: SelectableText(
-                    _extractedText,
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
-                    textAlign: TextAlign.justify,
-                  ),
+                  child: Image.file(imagefile!),
                 ),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Copy to Clipboard button
-            if (_extractedText.isNotEmpty)
-              ElevatedButton.icon(
-                onPressed: _copyTextToClipboard,
-                icon: const Icon(Icons.copy, size: 20),
-                label: const Text('Copy Text'),
+                const SizedBox(height: 20),
+              ],
+          
+              // Button to show the dialog for selecting image source
+              ElevatedButton(
+                onPressed: ShowImageDialog1,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: MyColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: const Text(
+                  'Pick Image',
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
-          ],
+              const SizedBox(height: 20),
+          
+              // Display the extracted text inside a scrollable container
+            //  Expanded(
+               // child:
+                Container(
+                 // height: 500,
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: _extractedText.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Extracted text will appear here.',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        )
+                      :// SingleChildScrollView(
+          
+                         // child:
+                          SelectableText(
+                            _extractedText,
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black87),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+               // ),
+             // ),
+              const SizedBox(height: 20),
+          
+              // Copy to Clipboard button
+              if (_extractedText.isNotEmpty)
+                ElevatedButton.icon(
+                  onPressed: _copyTextToClipboard,
+                  icon: const Icon(Icons.copy, size: 20),
+                  label: const Text('Copy Text'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: MyColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -185,7 +192,8 @@ class _OCRScreenState extends State<OCRScreen> {
         return AlertDialog(
           title: const Text(
             'Choose an Option',
-            style: TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
+            style:
+                TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
