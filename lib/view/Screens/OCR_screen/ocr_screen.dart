@@ -1,8 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // For Clipboard support
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:study_hub/utils/constants/colors.dart';
 
 class OCRScreen extends StatefulWidget {
@@ -13,159 +14,226 @@ class OCRScreen extends StatefulWidget {
 }
 
 class _OCRScreenState extends State<OCRScreen> {
-  File? imagefile;
-  String _extractedText = '';
+  File? imagefile; // File variable to store the picked image
+  String _extractedText = ''; // Variable to store the extracted text
+  final ImagePicker imagePicker = ImagePicker(); // Initialize ImagePicker
 
-  // Function to pick an image from the user's gallery
-  // Future<void> _pickImage() async {
-  //   final picker = ImagePicker();
-  //   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  // Function to pick image from the camera
+  void _PickImageWithCamera() async {
+    XFile? pickedfile = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: 1000,
+      maxWidth: 1000,
+    );
+    if (pickedfile != null) {
+      setState(() {
+        imagefile = File(pickedfile.path);
+      });
+      Navigator.pop(context); // Close the dialog after picking the image
+      _performTextRecognition(); // Perform OCR on the selected image
+    }
+  }
 
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       _image = File(pickedFile.path);
-  //     });
-  //   }
-  // }
+  // Function to pick image from the gallery
+  void _PickImageWithGallery() async {
+    XFile? pickedfile = await imagePicker.pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 1000,
+      maxWidth: 1000,
+    );
+    if (pickedfile != null) {
+      setState(() {
+        imagefile = File(pickedfile.path);
+      });
+      Navigator.pop(context); // Close the dialog after picking the image
+      _performTextRecognition(); // Perform OCR on the selected image
+    }
+  }
 
-  // // Function to upload the image and call the Python API
-  Future<void> _uploadImage() async {
+  // Function to perform text recognition using ML Kit
+  void _performTextRecognition() async {
     if (imagefile == null) return;
 
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse(
-          'http://<your-flask-server-ip>:5000/extract-text'), // Use your Flask server URL
-    );
+    // Create an InputImage object from the selected file
+    final InputImage inputImage = InputImage.fromFile(imagefile!);
 
-    //   // Attach the image as a file in the request
-    //   request.files.add(
-    //     await http.MultipartFile.fromPath('image', image!.path),
-    //   );
+    // Initialize the text recognizer
+    final TextRecognizer textRecognizer = TextRecognizer();
 
-    final response = await request.send();
+    try {
+      // Process the image for text recognition
+      final RecognizedText recognizedText =
+          await textRecognizer.processImage(inputImage);
 
-    if (response.statusCode == 200) {
-      final respStr = await response.stream.bytesToString();
-      final jsonResponse = jsonDecode(respStr);
-
+      // Extract the recognized text and update the UI
       setState(() {
-        _extractedText = jsonResponse['extracted_text'];
+        _extractedText = recognizedText.text;
       });
-    } else {
-      setState(() {
-        _extractedText = 'Failed to extract text.';
-      });
+    } catch (e) {
+      print('Failed to recognize text: $e');
+    } finally {
+      //close the text recognizer when you're done to release resources
+      textRecognizer.close();
+    }
+  }
+
+  // Function to copy the extracted text to clipboard
+  void _copyTextToClipboard() {
+    if (_extractedText.isNotEmpty) {
+      Clipboard.setData(ClipboardData(text: _extractedText));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: const Text('Text copied to clipboard!'),
+          backgroundColor: MyColors.primary,
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('OCR Text Extraction'),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            imagefile == null
-                ? const Text('No image selected.')
-                : Image.memory(imagefile!.readAsBytesSync()),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: ShowImageDialog1,
-              child: const Text('Pick Image'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _uploadImage,
-              child: const Text('Extract Text'),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              _extractedText.isEmpty
-                  ? 'Extracted text will appear here.'
-                  : _extractedText,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Display the selected image if available
+              if (imagefile != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Image.file(imagefile!),
+                ),
+                const SizedBox(height: 20),
+              ],
+          
+              // Button to show the dialog for selecting image source
+              ElevatedButton(
+                onPressed: ShowImageDialog1,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: MyColors.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                child: const Text(
+                  'Pick Image',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              const SizedBox(height: 20),
+          
+              // Display the extracted text inside a scrollable container
+            //  Expanded(
+               // child:
+                Container(
+                 // height: 500,
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: _extractedText.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Extracted text will appear here.',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        )
+                      :// SingleChildScrollView(
+          
+                         // child:
+                          SelectableText(
+                            _extractedText,
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black87),
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+               // ),
+             // ),
+              const SizedBox(height: 20),
+          
+              // Copy to Clipboard button
+              if (_extractedText.isNotEmpty)
+                ElevatedButton.icon(
+                  onPressed: _copyTextToClipboard,
+                  icon: const Icon(Icons.copy, size: 20),
+                  label: const Text('Copy Text'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: MyColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void _PickImageWithCamera() async {
-    XFile? pickedfile = await ImagePicker()
-        .pickImage(source: ImageSource.camera, maxHeight: 1000, maxWidth: 1000);
-    setState(() {
-      imagefile = File(pickedfile!.path);
-    });
-    //   _cropImage();
-    Navigator.pop(context);
-  }
-
-  void _PickImageWithGallary() async {
-    XFile? pickedfile = await ImagePicker().pickImage(
-        source: ImageSource.gallery, maxHeight: 1000, maxWidth: 1000);
-    setState(() {
-      imagefile = File(pickedfile!.path);
-    });
-
-    Navigator.pop(context);
-  }
-
+  // Function to show the dialog to select between Camera and Gallery
   void ShowImageDialog1() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Choose an Option',
-                style: const TextStyle(
-                    color: MyColors.primary, fontWeight: FontWeight.bold)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                InkWell(
-                  onTap: _PickImageWithCamera,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.camera, color: MyColors.primary),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Camera',
-                          style: TextStyle(color: MyColors.primary),
-                        )
-                      ],
-                    ),
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            'Choose an Option',
+            style:
+                TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InkWell(
+                onTap: _PickImageWithCamera,
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.camera, color: MyColors.primary),
+                      SizedBox(width: 10),
+                      Text(
+                        'Camera',
+                        style: TextStyle(color: MyColors.primary),
+                      )
+                    ],
                   ),
                 ),
-                InkWell(
-                  onTap: _PickImageWithGallary,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.image, color: MyColors.primary),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Gallary',
-                          style: TextStyle(
-                            color: MyColors.primary,
-                          ),
-                        )
-                      ],
-                    ),
+              ),
+              InkWell(
+                onTap: _PickImageWithGallery,
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.image, color: MyColors.primary),
+                      SizedBox(width: 10),
+                      Text(
+                        'Gallery',
+                        style: TextStyle(color: MyColors.primary),
+                      )
+                    ],
                   ),
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

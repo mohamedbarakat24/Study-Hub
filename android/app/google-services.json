@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "86149050087",
+    "project_id": "ocr-study-hub",
+    "storage_bucket": "ocr-study-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86149050087:android:2624372d65e39ee89afc42",
+        "android_client_info": {
+          "package_name": "com.example.study_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE-hKkyda2cyOAcl9XpwZY7A86xrJlaZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
