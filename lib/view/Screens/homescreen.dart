@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:study_hub/utils/constants/colors.dart';
 import 'package:study_hub/view/Screens/OCR_screen/ocr_screen.dart';
+import 'package:study_hub/view/Screens/Ocr_PDF/ocr_pdf.dart';
 import 'package:study_hub/view/chatview/chat_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,9 +14,9 @@ class _HomePageState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    const Center(child: OCRScreen()),
-    const Center(child: ChatView()),
-    const Center(child: Text("hhhh")),
+     Center(child: OCRScreen()),
+     Center(child: ChatView()),
+    Center(child: OcrPdfScreen() ),
     const Center(child: Text('Profile', style: TextStyle(fontSize: 24))),
   ];
 
