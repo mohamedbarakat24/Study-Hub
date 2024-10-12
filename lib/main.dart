@@ -7,12 +7,6 @@ import 'package:study_hub/app.dart';
 
 void main() {
   runApp(
-    DevicePreview(
-      enabled: true,
-      tools: const [
-        ...DevicePreview.defaultTools,
-      ],
-      builder: (context) => const App(),
-    ),
+    const App(),
   );
 }
