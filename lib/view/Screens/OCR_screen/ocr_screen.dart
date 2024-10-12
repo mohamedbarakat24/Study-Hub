@@ -83,7 +83,7 @@ class _OCRScreenState extends State<OCRScreen> {
       Clipboard.setData(ClipboardData(text: _extractedText));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: const Text('Text copied to clipboard!'),
+          content:  Text('Text copied to clipboard!'),
           backgroundColor: MyColors.primary,
         ),
       );
