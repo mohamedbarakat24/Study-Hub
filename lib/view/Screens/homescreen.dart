@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:study_hub/utils/constants/colors.dart';
@@ -14,9 +15,9 @@ class _HomePageState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-     Center(child: OCRScreen()),
-     Center(child: ChatView()),
-    Center(child: OcrPdfScreen() ),
+    Center(child: OCRScreen()),
+    Center(child: ChatView()),
+    Center(child: OcrPdfScreen()),
     const Center(child: Text('Profile', style: TextStyle(fontSize: 24))),
   ];
 
@@ -31,6 +32,13 @@ class _HomePageState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Study Hub'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: const Icon(Icons.exit_to_app))
+        ],
       ),
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: Container(

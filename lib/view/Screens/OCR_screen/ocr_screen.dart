@@ -10,6 +10,7 @@ class OCRScreen extends StatefulWidget {
   const OCRScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _OCRScreenState createState() => _OCRScreenState();
 }
 
@@ -19,6 +20,7 @@ class _OCRScreenState extends State<OCRScreen> {
   final ImagePicker imagePicker = ImagePicker(); // Initialize ImagePicker
 
   // Function to pick image from the camera
+  // ignore: non_constant_identifier_names
   void _PickImageWithCamera() async {
     XFile? pickedfile = await imagePicker.pickImage(
       source: ImageSource.camera,
@@ -83,7 +85,7 @@ class _OCRScreenState extends State<OCRScreen> {
       Clipboard.setData(ClipboardData(text: _extractedText));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content:  Text('Text copied to clipboard!'),
+          content: Text('Text copied to clipboard!'),
           backgroundColor: MyColors.primary,
         ),
       );
@@ -110,7 +112,7 @@ class _OCRScreenState extends State<OCRScreen> {
                 ),
                 const SizedBox(height: 20),
               ],
-          
+
               // Button to show the dialog for selecting image source
               ElevatedButton(
                 onPressed: ShowImageDialog1,
@@ -128,40 +130,40 @@ class _OCRScreenState extends State<OCRScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-          
+
               // Display the extracted text inside a scrollable container
-            //  Expanded(
-               // child:
-                Container(
-                 // height: 500,
-                  padding: const EdgeInsets.all(16.0),
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: _extractedText.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'Extracted text will appear here.',
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        )
-                      :// SingleChildScrollView(
-          
-                         // child:
-                          SelectableText(
-                            _extractedText,
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black87),
-                            textAlign: TextAlign.justify,
-                          ),
+              //  Expanded(
+              // child:
+              Container(
+                // height: 500,
+                padding: const EdgeInsets.all(16.0),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: _extractedText.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Extracted text will appear here.',
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
-               // ),
-             // ),
+                      )
+                    : // SingleChildScrollView(
+
+                    // child:
+                    SelectableText(
+                        _extractedText,
+                        style: const TextStyle(
+                            fontSize: 16, color: Colors.black87),
+                        textAlign: TextAlign.justify,
+                      ),
+              ),
+              // ),
+              // ),
               const SizedBox(height: 20),
-          
+
               // Copy to Clipboard button
               if (_extractedText.isNotEmpty)
                 ElevatedButton.icon(
@@ -173,8 +175,8 @@ class _OCRScreenState extends State<OCRScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
                 ),
             ],

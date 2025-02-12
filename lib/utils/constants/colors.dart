@@ -4,7 +4,7 @@ class MyColors {
   // App theme colors
   // static const Color primary = Color(0xFF4b68ff);
 
-  static const Color primary = Color(0xFF132841);
+  static const Color primary = Color.fromARGB(255, 83, 147, 226);
   static const Color MyBesto = Color(0xff766992);
   static const Color secondary = Color(0xFF2a3f5a);
   static const Color primaryYellow = Color(0xFFffe479);

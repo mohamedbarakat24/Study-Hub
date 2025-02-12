@@ -17,7 +17,9 @@ class TAppTheme {
     fontFamily: 'Poppins',
     disabledColor: MyColors.grey,
     brightness: Brightness.light,
-    primaryColor: MyColors.primary,
+    primaryColor: const Color.fromARGB(255, 83, 145, 226),
+    colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color.fromARGB(255, 83, 147, 226)),
     textTheme: MyTextTheme.lightTextTheme,
     chipTheme: MyChipTheme.lightChipTheme,
     scaffoldBackgroundColor: MyColors.white,
