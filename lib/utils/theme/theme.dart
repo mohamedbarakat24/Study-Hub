@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:study_hub/utils/theme/widget_themes/appbar_theme.dart';
 import 'package:study_hub/utils/theme/widget_themes/chip_theme.dart';
 import 'package:study_hub/utils/theme/widget_themes/text_field_theme.dart';
@@ -45,4 +47,58 @@ class TAppTheme {
     outlinedButtonTheme: MyOutlinedButtonTheme.darkOutlinedButtonTheme,
     inputDecorationTheme: MyTextFormFieldTheme.darkInputDecorationTheme,
   );
+}
+
+TextStyle get headingStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 24,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
+  ));
+}
+
+TextStyle get subHeadingStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
+  ));
+}
+
+TextStyle get titleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
+  ));
+}
+
+TextStyle get subTitleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
+  ));
+}
+
+TextStyle get bodyStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
+  ));
+}
+
+TextStyle get body2Style {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+    color: Get.isDarkMode ? Colors.grey[200] : Colors.black,
+  ));
 }

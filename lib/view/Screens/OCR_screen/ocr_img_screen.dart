@@ -6,15 +6,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:study_hub/utils/constants/colors.dart';
 
-class OCRScreen extends StatefulWidget {
-  const OCRScreen({super.key});
+class OCRImgScreen extends StatefulWidget {
+  const OCRImgScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _OCRScreenState createState() => _OCRScreenState();
+  _OCRImgScreenState createState() => _OCRImgScreenState();
 }
 
-class _OCRScreenState extends State<OCRScreen> {
+class _OCRImgScreenState extends State<OCRImgScreen> {
   File? imagefile; // File variable to store the picked image
   String _extractedText = ''; // Variable to store the extracted text
   final ImagePicker imagePicker = ImagePicker(); // Initialize ImagePicker

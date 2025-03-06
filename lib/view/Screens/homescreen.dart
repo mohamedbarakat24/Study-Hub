@@ -2,9 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:study_hub/utils/constants/colors.dart';
-import 'package:study_hub/view/Screens/OCR_screen/ocr_screen.dart';
+import 'package:study_hub/view/Screens/OCR_screen/ocr_img_screen.dart';
 import 'package:study_hub/view/Screens/Ocr_PDF/ocr_pdf.dart';
+import 'package:study_hub/view/components/drawer.dart';
 import 'package:study_hub/view/chatview/chat_view.dart';
+
+import 'summarize_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,10 +18,11 @@ class _HomePageState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    Center(child: OCRScreen()),
+    Center(child: OCRImgScreen()),
     Center(child: ChatView()),
     Center(child: OcrPdfScreen()),
-    const Center(child: Text('Profile', style: TextStyle(fontSize: 24))),
+    Center(child: MenuDrawer()),
+    Center(child: SummarizeScreen()),
   ];
 
   void _onItemTapped(int index) {
@@ -59,19 +63,23 @@ class _HomePageState extends State<HomeScreen> {
               tabs: [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
+                  text: 'H',
                 ),
                 GButton(
                   icon: Icons.chat,
-                  text: 'Chat Bot',
+                  text: 'Ch',
                 ),
                 GButton(
                   icon: Icons.check_box,
-                  text: 'To-Do List',
+                  text: 'To',
                 ),
                 GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
+                  icon: Icons.home,
+                  text: 'd',
+                ),
+                GButton(
+                  icon: Icons.home,
+                  text: 's',
                 ),
               ],
               selectedIndex: _selectedIndex,
