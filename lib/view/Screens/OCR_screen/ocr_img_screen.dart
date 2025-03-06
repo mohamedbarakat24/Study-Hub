@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For Clipboard support
@@ -17,7 +19,8 @@ class OCRImgScreen extends StatefulWidget {
 class _OCRImgScreenState extends State<OCRImgScreen> {
   File? imagefile; // File variable to store the picked image
   String _extractedText = ''; // Variable to store the extracted text
-  final ImagePicker imagePicker = ImagePicker(); // Initialize ImagePicker
+  final ImagePicker imagePicker = ImagePicker();
+  bool _isLoading = false; // Initialize ImagePicker
 
   // Function to pick image from the camera
   // ignore: non_constant_identifier_names
@@ -53,29 +56,54 @@ class _OCRImgScreenState extends State<OCRImgScreen> {
   }
 
   // Function to perform text recognition using ML Kit
-  void _performTextRecognition() async {
+  Future<void> _performTextRecognition() async {
     if (imagefile == null) return;
 
-    // Create an InputImage object from the selected file
-    final InputImage inputImage = InputImage.fromFile(imagefile!);
-
-    // Initialize the text recognizer
-    final TextRecognizer textRecognizer = TextRecognizer();
+    setState(() {
+      _isLoading = true; // Show loading indicator
+    });
 
     try {
-      // Process the image for text recognition
-      final RecognizedText recognizedText =
-          await textRecognizer.processImage(inputImage);
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('http://192.168.1.6:5000/ocr/extract_text'),
+      );
 
-      // Extract the recognized text and update the UI
-      setState(() {
-        _extractedText = recognizedText.text;
-      });
+      request.files.add(
+        await http.MultipartFile.fromPath('file', imagefile!.path),
+      );
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseBody);
+
+        if (jsonResponse['text'] != null) {
+          setState(() {
+            _extractedText = jsonResponse['text'];
+          });
+
+          // Haptic feedback on success
+          HapticFeedback.mediumImpact();
+        } else {
+          setState(() {
+            _extractedText = 'No text found in the image.';
+          });
+        }
+      } else {
+        setState(() {
+          _extractedText = 'Failed to extract text. Try again.';
+        });
+      }
     } catch (e) {
-      print('Failed to recognize text: $e');
+      setState(() {
+        _extractedText = 'Error occurred: $e';
+      });
     } finally {
-      //close the text recognizer when you're done to release resources
-      textRecognizer.close();
+      setState(() {
+        _isLoading = false; // Hide loading indicator
+      });
     }
   }
 
