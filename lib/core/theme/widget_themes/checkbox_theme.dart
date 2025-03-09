@@ -8,15 +8,15 @@ class MyCheckboxTheme {
   static CheckboxThemeData lightCheckboxTheme = CheckboxThemeData(
     shape:
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(MySizes.xs)),
-    checkColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
+    checkColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
         return MyColors.white;
       } else {
         return MyColors.black;
       }
     }),
-    fillColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
         return MyColors.primary;
       } else {
         return Colors.transparent;
@@ -27,15 +27,15 @@ class MyCheckboxTheme {
   static CheckboxThemeData darkCheckboxTheme = CheckboxThemeData(
     shape:
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(MySizes.xs)),
-    checkColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
+    checkColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
         return MyColors.white;
       } else {
         return MyColors.black;
       }
     }),
-    fillColor: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
+    fillColor: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
         return MyColors.primary;
       } else {
         return Colors.transparent;

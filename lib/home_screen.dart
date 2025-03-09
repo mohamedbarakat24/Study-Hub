@@ -9,6 +9,8 @@ import 'package:study_hub/feature/translation/presentation/translate_screen.dart
 import '../../feature/to_do/presentation/to_do_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Study Hub'),
+        title: const Text('Study Hub'),
         actions: [
           IconButton(
               onPressed: () {
@@ -55,8 +57,8 @@ class _HomePageState extends State<HomeScreen> {
               activeColor: MyColors.MyBesto,
               color: Colors.grey,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: const Duration(milliseconds: 400),
               tabBackgroundColor: MyColors.MyBesto.withOpacity(0.1),
               tabs: const [
                 GButton(

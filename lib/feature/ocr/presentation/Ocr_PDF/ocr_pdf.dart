@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer' as io;
-import 'dart:typed_data';
 import 'package:study_hub/core/constants/colors.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 
 class OcrPdfScreen extends StatefulWidget {
-  const OcrPdfScreen({Key? key}) : super(key: key);
+  const OcrPdfScreen({super.key});
 
   @override
   _OcrPdfScreenState createState() => _OcrPdfScreenState();

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -130,7 +129,7 @@ class _TranslateScreenState extends State<TranslateScreen> {
                   maxLines: null,
                   decoration: InputDecoration(
                     labelText: 'Enter text to Translate',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     contentPadding: const EdgeInsets.all(16.0),
                     errorText: _errorText,
                   ),

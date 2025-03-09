@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -167,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: _supmit,
                               style: TextButton.styleFrom(
                                   backgroundColor: MyColors.primary,
-                                  fixedSize: Size(120, 60)),
+                                  fixedSize: const Size(120, 60)),
                               child: Text(
                                 _islogin ? 'Login' : 'Sign Up',
                                 style: GoogleFonts.alef(

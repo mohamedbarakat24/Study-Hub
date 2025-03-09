@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../data/model_sum.dart';
@@ -26,7 +25,7 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
     final text = summarizeTextController.text;
     if (text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter some text to summarize")),
+        const SnackBar(content: Text("Please enter some text to summarize")),
       );
       return;
     }
@@ -55,7 +54,7 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Summarization", style: TextStyle(color: Colors.white)),
+        title: const Text("Summarization", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
@@ -70,16 +69,16 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFF5F5F5),
+                  color: const Color(0xFFF5F5F5),
                 ),
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                   children: [
                     TextFormField(
                       controller: summarizeTextController,
                       keyboardType: TextInputType.multiline,
                       maxLines: 5,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Enter text to Summarize",
                         border: InputBorder.none,
                       ),
@@ -118,9 +117,9 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFF5F5F5),
+                  color: const Color(0xFFF5F5F5),
                 ),
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 height: MediaQuery.of(context).size.height * 0.25,
                 width: double.infinity,
                 child: Column(
@@ -139,19 +138,19 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.copy, color: Colors.blue),
+                          icon: const Icon(Icons.copy, color: Colors.blue),
                           onPressed: () {
                             Clipboard.setData(
                               ClipboardData(text: summarizedText),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                   content: Text("Text copied to clipboard")),
                             );
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.settings_voice, color: Colors.blue),
+                          icon: const Icon(Icons.settings_voice, color: Colors.blue),
                           onPressed: () {
                             // Navigate to text-to-speech screen
                           },

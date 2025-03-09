@@ -113,7 +113,7 @@ class _OnboardingViewState extends State<OnboardingView> {
 
             if (!mounted) return;
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                context, MaterialPageRoute(builder: (context) => const HomeScreen()));
           },
           child: const Text(
             "Get started",

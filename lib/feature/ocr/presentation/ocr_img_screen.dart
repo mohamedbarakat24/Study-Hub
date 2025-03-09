@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For Clipboard support
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:study_hub/core/constants/colors.dart';
 
 class OCRImgScreen extends StatefulWidget {

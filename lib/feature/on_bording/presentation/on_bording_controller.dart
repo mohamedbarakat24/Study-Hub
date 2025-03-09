@@ -18,7 +18,7 @@ class OnBordingController extends GetxController {
 
   void NextPage() {
     if (current_index.value == 2) {
-      Get.offAll(HomeScreen());
+      Get.offAll(const HomeScreen());
     } else {
       int page = current_index.value + 1;
       Pagecontroller.jumpToPage(page);
