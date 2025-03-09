@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:study_hub/app.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'db/db_hellper.dart';
+import 'core/db/db_hellper.dart';
 import 'firebase_options.dart';
 // void main() {
 //   runApp(const MyApp());
