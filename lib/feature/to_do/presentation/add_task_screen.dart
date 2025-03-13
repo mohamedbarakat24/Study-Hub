@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/Model/task_model.dart';
-import '../../../controller/task_controller.dart';
+import '../../translation/logic/controller/task_controller.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/theme/theme.dart';
 import '../../../core/widget/my_input_field.dart';

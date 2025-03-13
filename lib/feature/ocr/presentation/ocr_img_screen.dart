@@ -5,6 +5,7 @@ import 'package:flutter/services.dart'; // For Clipboard support
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:study_hub/core/constants/colors.dart';
+import 'package:study_hub/core/widget/custom_button.dart';
 
 class OCRImgScreen extends StatefulWidget {
   const OCRImgScreen({super.key});
@@ -122,10 +123,14 @@ class _OCRImgScreenState extends State<OCRImgScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Extracte Text From Image',
-            style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
+        title: const Text(
+          'Extracte Text From Image',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: MyColors.buttonPrimary,
+            fontSize: 24,
+          ),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -146,20 +151,10 @@ class _OCRImgScreenState extends State<OCRImgScreen> {
               ],
 
               // Button to show the dialog for selecting image source
-              ElevatedButton(
-                onPressed: ShowImageDialog1,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: MyColors.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                ),
-                child: const Text(
-                  'Pick Image',
-                  style: TextStyle(fontSize: 18),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: CustomButton(
+                    label: "Pick image", onPressed: ShowImageDialog1),
               ),
               const SizedBox(height: 20),
 

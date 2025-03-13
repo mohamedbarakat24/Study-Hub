@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 //import 'package:tasky/services/notification_services%20from%20course.dart';
 
 import '../../../core/Model/task_model.dart';
-import '../../../controller/task_controller.dart';
+import '../../translation/logic/controller/task_controller.dart';
 import '../../../core/constants/size_config.dart';
 
 import '../../../core/constants/colors.dart';

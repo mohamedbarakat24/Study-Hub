@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../home_screen.dart';
+import 'package:study_hub/feature/home/presentation/home_screen.dart';
 
 class OnBordingController extends GetxController {
   static OnBordingController get instance => Get.find();
@@ -18,7 +17,7 @@ class OnBordingController extends GetxController {
 
   void NextPage() {
     if (current_index.value == 2) {
-      Get.offAll(const HomeScreen());
+      Get.offAll(const HomePage());
     } else {
       int page = current_index.value + 1;
       Pagecontroller.jumpToPage(page);

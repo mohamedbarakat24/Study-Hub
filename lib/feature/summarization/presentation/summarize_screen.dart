@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:study_hub/core/constants/colors.dart';
 import '../data/model_sum.dart';
 
 class SummarizeScreen extends StatefulWidget {
@@ -54,8 +55,14 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Summarization", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blue,
+        title: Text(
+          "Summarization",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: MyColors.buttonPrimary,
+            fontSize: MediaQuery.of(context).size.width * 0.08,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -89,9 +96,10 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               Center(
                 child: MaterialButton(
-                  onPressed: isLoading ? null : summarize, //summarize method
-                  minWidth: MediaQuery.of(context).size.width * 0.5,
-                  color: Colors.blue,
+                  onPressed: isLoading ? null : summarize,
+                  minWidth: MediaQuery.of(context).size.width * 0.75,
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  color: MyColors.buttonPrimary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -101,8 +109,8 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
                   ),
                   child: isLoading
                       ? const CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.blue),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              MyColors.buttonPrimary),
                         )
                       : Text(
                           "Summarize",
@@ -138,7 +146,8 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.copy, color: Colors.blue),
+                          icon: const Icon(Icons.copy,
+                              color: MyColors.buttonPrimary),
                           onPressed: () {
                             Clipboard.setData(
                               ClipboardData(text: summarizedText),
@@ -150,7 +159,8 @@ class _SummarizeScreenState extends State<SummarizeScreen> {
                           },
                         ),
                         IconButton(
-                          icon: const Icon(Icons.settings_voice, color: Colors.blue),
+                          icon: const Icon(Icons.settings_voice,
+                              color: MyColors.buttonPrimary),
                           onPressed: () {
                             // Navigate to text-to-speech screen
                           },

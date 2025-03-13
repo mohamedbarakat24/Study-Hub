@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:study_hub/core/constants/colors.dart';
 import 'package:study_hub/core/helpers/helper_functions.dart';
+import 'package:study_hub/feature/home/presentation/home_screen.dart';
 
-import '../../../home_screen.dart';
 import 'onboarding_items.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -112,8 +112,8 @@ class _OnboardingViewState extends State<OnboardingView> {
             pres.setBool("onboarding", true);
 
             if (!mounted) return;
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
           },
           child: const Text(
             "Get started",

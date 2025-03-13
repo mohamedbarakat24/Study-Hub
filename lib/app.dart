@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:study_hub/home.dart';
 import 'core/theme/theme.dart';
-import 'home_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -14,7 +14,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: Home(),
       //     StreamBuilder(
       //   stream: FirebaseAuth.instance.authStateChanges(),
       //   builder: (context, snapshot) {
